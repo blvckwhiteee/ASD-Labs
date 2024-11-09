@@ -1,0 +1,3 @@
+D:/ExDesktop/Lab4/Lab4_to4no_definitive/cmake-build-debug/CMakeFiles/Lab4_to4no_definitive.dir
+D:/ExDesktop/Lab4/Lab4_to4no_definitive/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/ExDesktop/Lab4/Lab4_to4no_definitive/cmake-build-debug/CMakeFiles/rebuild_cache.dir
