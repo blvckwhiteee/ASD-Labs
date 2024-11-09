@@ -1,0 +1,3 @@
+D:/ExDesktop/Lab1/FirstWay/cmake-build-debug/CMakeFiles/FirstWay.dir
+D:/ExDesktop/Lab1/FirstWay/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/ExDesktop/Lab1/FirstWay/cmake-build-debug/CMakeFiles/rebuild_cache.dir

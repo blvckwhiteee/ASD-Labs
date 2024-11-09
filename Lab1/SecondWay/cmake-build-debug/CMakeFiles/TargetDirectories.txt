@@ -1,0 +1,3 @@
+C:/Users/Misha/Desktop/Lab1/SecondWay/cmake-build-debug/CMakeFiles/SecondWay.dir
+C:/Users/Misha/Desktop/Lab1/SecondWay/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Misha/Desktop/Lab1/SecondWay/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,3 @@
+D:/ExDesktop/Lab2/1_way_counting/cmake-build-debug/CMakeFiles/1_way_counting.dir
+D:/ExDesktop/Lab2/1_way_counting/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/ExDesktop/Lab2/1_way_counting/cmake-build-debug/CMakeFiles/rebuild_cache.dir
