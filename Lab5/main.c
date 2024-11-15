@@ -2,19 +2,21 @@
 #include <windows.h>
 
 
-int find_X (int secondary_diagonal_of_matrix[], int n, int X) {
+int find_X (int matrix[10][10], int n, int X) {
    int L = 0;
    int R = n - 1;
    while (L <= R) {
-      int mid = ((L + R) / 2);
-      if ((secondary_diagonal_of_matrix[mid] == X) && (L == R)) {
-         return mid;
-      }
-      else if (secondary_diagonal_of_matrix[mid] < X) {
-         L = mid + 1;
-      }
-      else {
-         R = mid;
+      for (int i = 0; i < n; i++) {
+         int mid = ((L + R) / 2);
+         if ((matrix[mid][n-mid-1] == X) && (L == R)) {
+            return mid;
+         }
+         else if (matrix[mid][n-mid-1] < X) {
+            L = mid + 1;
+         }
+         else {
+            R = mid;
+         }
       }
    }
    return -1;
@@ -23,7 +25,6 @@ int find_X (int secondary_diagonal_of_matrix[], int n, int X) {
 
 int main(void) {
    int n = 10;
-   int secondary_diagonal_of_matrix[7];
    int matrix [10][10] = {
       {1,1,1,1,1,1,1,1,1,5},
       {1,1,1,1,1,1,1,1,6,1},
@@ -44,20 +45,13 @@ int main(void) {
       printf("\n");
    }
    printf("\n----------------------------\n\n");
-   for (int i = 0; i < n; i++) {
-      secondary_diagonal_of_matrix[i] = matrix[i][n-i-1];
-   }
    int X;
    printf("Enter X:");
    scanf("%d", &X);
    printf("----------------------------\n");
-   int result = find_X(secondary_diagonal_of_matrix, n, X);
+   int result = find_X(matrix, n, X);
    if (result != -1) {
       printf("Secondary diagonal is: ");
-      for (int i = 0; i < n; i++) {
-         secondary_diagonal_of_matrix[i];
-         printf("%d ",secondary_diagonal_of_matrix[i]);
-      }
       int position = n - result - 1;
       printf("\nThe X was found on [%d][%d] position",  result, position);
    }
