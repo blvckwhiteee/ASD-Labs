@@ -1,4 +1,4 @@
-- There will be my programms and report to it. 
+# There will be my programms and report to it. 
 - *scores are clickable*
    - Lab 1 - [10/10](https://docs.google.com/document/d/1InFjl5dPh5wPCF7WbRdH8msszcav0SUCQHi2nLhI7Zs/edit?tab=t.0)
    - Lab 2 - [10/10](https://docs.google.com/document/d/1VwGA9TUUrjQOdZcdbOIjWrO7_lGP-DCtlb8oHC5uUZ4/edit?tab=t.0)
