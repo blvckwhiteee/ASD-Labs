@@ -1,0 +1,19 @@
+# Ignore node_modules folder
+.vscode/
+
+# Ignore compiled files
+*.class
+*.o
+*.exe
+
+# Ignore environment variables & secrets
+.env
+config/secrets.json
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
