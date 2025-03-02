@@ -9,6 +9,8 @@ double recursiveWrapper(unsigned n, double x, int i, double prev);
 
 double mixedRecursiveFunction(unsigned n, double x);
 
+double cyclicalFunction(unsigned n, double x);
+
 int main()
 {
   const double initSum = 0.0;
@@ -23,6 +25,7 @@ int main()
   printf("Result (Recursive Descent) = %lf\n", recursiveDescent(n, x, 1, 1.0, initSum));
   printf("Result (Recursive Ascent) = %lf\n", recursiveAscent(n, x, 1));
   printf("Result (Mixed Recursion) = %lf\n", mixedRecursiveFunction(n, x));
+  printf("Result (Cyclical Function) = %lf\n", cyclicalFunction(n, x));
 
   getch();
   return 0;
@@ -53,11 +56,23 @@ double recursiveWrapper(unsigned n, double x, int i, double intermediateResult)
   if (i == n)
     return intermediateResult;
 
-  double next = -intermediateResult * (x * x) / (4.0 * i * i - 2.0 * i);
+  double next = -intermediateResult * ((x * x) / (4.0 * i * i - 2.0 * i));
   return intermediateResult + recursiveWrapper(n, x, i + 1, next);
 }
 
 double mixedRecursiveFunction(unsigned n, double x)
 {
   return recursiveWrapper(n, x, 1, 1.0);
+}
+
+double cyclicalFunction(unsigned n, double x)
+{
+  double intermediateResult = 1;
+  double result = intermediateResult;
+  for (int i = 1; i < n; i++)
+  {
+    intermediateResult = -intermediateResult * ((x * x) / (4.0 * i * i - 2.0 * i));
+    result += intermediateResult;
+  }
+  return result;
 }
