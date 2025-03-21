@@ -7,7 +7,7 @@ typedef struct Node
   struct Node *next, *prev;
 } Node;
 
-int calculate_expression(Node *head);
+int calculateExpression(Node *head);
 
 Node *createNode(int value);
 
@@ -38,13 +38,13 @@ int main()
     addNode(&head, value);
   }
   printList(head);
-  printf("Result: %d\n", calculate_expression(head));
+  printf("Result: %d\n", calculateExpression(head));
 
   clearList(&head);
   return 0;
 }
 
-int calculate_expression(Node *head)
+int calculateExpression(Node *head)
 {
   if (!head)
     return 0;
@@ -150,6 +150,7 @@ void printList(Node *head)
     exit(EXIT_FAILURE);
   }
   Node *temp = head;
+  printf("List: ");
   do
   {
     printf("%d ", temp->value);
