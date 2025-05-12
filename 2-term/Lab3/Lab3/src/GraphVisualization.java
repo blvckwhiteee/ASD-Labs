@@ -16,7 +16,6 @@ public class GraphVisualization extends JPanel {
     private boolean showUndirected = false;
     private final int scaleFactor = 2;
 
-    // Color constants
     private static final Color NODE_FILL = new Color(83, 83, 83);
     private static final Color NODE_BORDER = new Color(0, 0, 0);
     private static final Color DIRECTED_EDGE = new Color(70, 70, 70);
@@ -29,7 +28,6 @@ public class GraphVisualization extends JPanel {
         this.Adir = Adir;
         this.positions = positions;
 
-        // Scale up positions
         for (Point p : positions) {
             p.x *= scaleFactor;
             p.y *= scaleFactor;
@@ -45,7 +43,6 @@ public class GraphVisualization extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Draw undirected graph if enabled
         if (showUndirected) {
             drawGraph(g2d, Aundir, false, 0);
             g2d.setColor(TEXT_COLOR);
@@ -53,7 +50,6 @@ public class GraphVisualization extends JPanel {
             g2d.drawString("Undirected Graph", 350, 40);
         }
 
-        // Draw directed graph if enabled
         if (showDirected) {
             drawGraph(g2d, Adir, true, showUndirected ? 400 : 0);
             g2d.setColor(TEXT_COLOR);
@@ -63,10 +59,7 @@ public class GraphVisualization extends JPanel {
     }
 
     private void drawGraph(Graphics2D g2d, int[][] matrix, boolean directed, int yOffset) {
-        // Draw edges first (so they appear behind nodes)
         drawEdges(g2d, matrix, directed, yOffset);
-
-        // Draw nodes
         drawNodes(g2d, yOffset);
     }
 
@@ -77,13 +70,11 @@ public class GraphVisualization extends JPanel {
             Point p = positions.get(i);
             int nodeSize = 40 * scaleFactor;
 
-            // Draw node circle
             g2d.setColor(NODE_FILL);
             g2d.fillOval(p.x - nodeSize/2, p.y + yOffset - nodeSize/2, nodeSize, nodeSize);
             g2d.setColor(NODE_BORDER);
             g2d.drawOval(p.x - nodeSize/2, p.y + yOffset - nodeSize/2, nodeSize, nodeSize);
 
-            // Draw node number
             g2d.setColor(TEXT_COLOR);
             g2d.setFont(new Font("Arial", Font.BOLD, 16 * scaleFactor));
             String label = String.valueOf(i + 1);
@@ -95,10 +86,8 @@ public class GraphVisualization extends JPanel {
     }
 
     private void drawEdges(Graphics2D g2d, int[][] matrix, boolean directed, int yOffset) {
-        // Matrix to track which edges are bidirectional
         boolean[][] isBidirectional = new boolean[N][N];
 
-        // First pass: identify bidirectional edges
         if (directed) {
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < matrix[i].length; j++) {
@@ -110,12 +99,10 @@ public class GraphVisualization extends JPanel {
             }
         }
 
-        // Second pass: draw all edges
         for (int i = 0; i < matrix.length; i++) {
             for (int j = directed ? 0 : i; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 1) {
                     if (i == j) {
-                        // Self-loop
                         Point p = positions.get(i);
                         drawSelfLoop(g2d, p, directed, yOffset);
                     } else {
@@ -145,7 +132,6 @@ public class GraphVisualization extends JPanel {
     }
 
     private void drawBidirectionalEdge(Graphics2D g2d, Point p1, Point p2) {
-        // Calculate midpoint and perpendicular direction
         double midX = (p1.x + p2.x) / 2.0;
         double midY = (p1.y + p2.y) / 2.0;
 
@@ -153,14 +139,11 @@ public class GraphVisualization extends JPanel {
         double dy = p2.y - p1.y;
         double length = Math.sqrt(dx*dx + dy*dy);
 
-        // Normalize and rotate 90 degrees for perpendicular direction
         double nx = -dy/length;
         double ny = dx/length;
 
-        // Calculate control points for both curves
-        double curveHeight = length * 0.3; // Adjust curve height based on edge length
+        double curveHeight = length * 0.3;
 
-        // Draw first curve (A->B)
         double ctrl1X = midX + nx * curveHeight;
         double ctrl1Y = midY + ny * curveHeight;
         QuadCurve2D curve1 = new QuadCurve2D.Double(
@@ -171,7 +154,6 @@ public class GraphVisualization extends JPanel {
         g2d.draw(curve1);
         drawArrowHeadOnCurve(g2d, curve1, 0.9);
 
-        // Draw second curve (B->A) with opposite curvature
         double ctrl2X = midX - nx * curveHeight;
         double ctrl2Y = midY - ny * curveHeight;
         QuadCurve2D curve2 = new QuadCurve2D.Double(
@@ -184,31 +166,25 @@ public class GraphVisualization extends JPanel {
     }
 
     private void drawArrow(Graphics2D g2d, Point p1, Point p2) {
-        // Calculate the point where the arrow should end (before the node circle)
         double angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
         int nodeRadius = 20 * scaleFactor;
         int endX = (int)(p2.x - nodeRadius * Math.cos(angle));
         int endY = (int)(p2.y - nodeRadius * Math.sin(angle));
 
-        // Draw line
         g2d.drawLine(p1.x, p1.y, endX, endY);
 
-        // Draw arrow head
         drawArrowHead(g2d, new Point(endX, endY), angle);
     }
 
     private void drawArrowHeadOnCurve(Graphics2D g2d, QuadCurve2D curve, double t) {
-        // Get point near the end of the curve for arrow placement
         Point2D arrowPoint = getPointOnCurve(curve, t);
         Point2D beforePoint = getPointOnCurve(curve, t - 0.05);
 
-        // Calculate angle at this point
         double angle = Math.atan2(
                 arrowPoint.getY() - beforePoint.getY(),
                 arrowPoint.getX() - beforePoint.getX()
         );
 
-        // Draw arrow head
         drawArrowHead(g2d,
                 new Point((int)arrowPoint.getX(), (int)arrowPoint.getY()),
                 angle
@@ -251,10 +227,8 @@ public class GraphVisualization extends JPanel {
         int loopX = center.x - loopRadius / 2;
         int loopY = center.y + yOffset - nodeRadius - loopRadius + 40;
 
-        // Draw the loop (circle/oval)
         g2d.drawOval(loopX, loopY, loopRadius, loopRadius);
 
-        // Draw arrowhead for directed self-loop
         if (directed) {
             double angle = Math.toRadians(65);
             int arrowX = loopX + 5;
@@ -305,7 +279,6 @@ public class GraphVisualization extends JPanel {
 
         GraphVisualization graphPanel = new GraphVisualization(Aundir, Adir, positions);
 
-        // Create control panel with buttons
         JPanel controlPanel = new JPanel(new GridLayout(1, 3, 10, 10));
         controlPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -347,7 +320,6 @@ public class GraphVisualization extends JPanel {
             graphPanel.repaint();
         });
 
-        // Style buttons
         Font buttonFont = new Font("Arial", Font.BOLD, 14);
         directedButton.setFont(buttonFont);
         undirectedButton.setFont(buttonFont);
